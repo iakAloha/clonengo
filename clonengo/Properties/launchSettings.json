@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "clonengo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "clonengo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
