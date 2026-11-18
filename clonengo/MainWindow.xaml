@@ -38,67 +38,77 @@
         </MenuBarItem>
     </MenuBar>
 
-    <Grid Grid.Row="1" Padding="32" RowSpacing="20">
+    <Grid Grid.Row="1" Padding="24,12,24,20" RowSpacing="12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Otsikko -->
-        <Grid Grid.Row="0" ColumnSpacing="16">
+        <!-- Yläosa: asetukset vasemmalla, logo oikealla -->
+        <Grid Grid.Row="0" ColumnSpacing="24">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Spacing="4">
-                <TextBlock Text="Käyttäjäprofiilit" Style="{StaticResource TitleTextBlockStyle}" />
-                <TextBlock x:Name="DescriptionText"
-                           Text="Kopioi valitut käyttäjäprofiilit tiedostoon."
-                           Style="{StaticResource BodyTextBlockStyle}"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+            <StackPanel Spacing="12">
+                <!-- Otsikko -->
+                <StackPanel Spacing="2">
+                    <TextBlock Text="Käyttäjäprofiilit" Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock x:Name="DescriptionText"
+                               Text="Kopioi valitut käyttäjäprofiilit tiedostoon."
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+
+                <!-- Toiminnon valinta -->
+                <StackPanel x:Name="ModePanel" Spacing="4">
+                    <TextBlock Text="Toiminto" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <RadioButtons x:Name="ModeSelector"
+                                  MaxColumns="2"
+                                  SelectedIndex="0"
+                                  SelectionChanged="ModeSelector_SelectionChanged">
+                        <RadioButton Content="Kopioi tiedostoon" />
+                        <RadioButton Content="Palauta tiedostosta" />
+                    </RadioButtons>
+                </StackPanel>
+
+                <!-- Tiedoston polku ja pakkaus -->
+                <StackPanel x:Name="FilePanel" Spacing="4">
+                    <TextBlock x:Name="FileLabel" Text="Kohdetiedosto" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="FilePathBox"
+                                 PlaceholderText="Valitse tiedosto..."
+                                 IsReadOnly="True" />
+                        <Button Grid.Column="1" Content="Selaa..." Click="BrowseButton_Click" />
+                    </Grid>
+                    <StackPanel x:Name="CompressPanel" Orientation="Horizontal" Spacing="12" Margin="0,8,0,0">
+                        <TextBlock Text="Pakkaus" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center" />
+                        <ComboBox x:Name="CompressionBox" MinWidth="320" SelectedIndex="2">
+                            <ComboBoxItem Content="Ei pakkausta (nopein)" />
+                            <ComboBoxItem Content="Zip (nopea, kohtalainen pakkaus)" />
+                            <ComboBoxItem Content="7-Zip (paras pakkaus, hitaampi)" />
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
+
+            <Image Grid.Column="1"
+                   Source="ms-appx:///images/clonengo_logo.png"
+                   Height="240"
+                   Stretch="Uniform"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   AutomationProperties.Name="Clone 'n GO -logo" />
         </Grid>
 
-        <!-- Toiminnon valinta -->
-        <StackPanel x:Name="ModePanel" Grid.Row="1" Spacing="8">
-            <TextBlock Text="Toiminto" Style="{StaticResource BodyStrongTextBlockStyle}" />
-            <RadioButtons x:Name="ModeSelector"
-                          MaxColumns="2"
-                          SelectedIndex="0"
-                          SelectionChanged="ModeSelector_SelectionChanged">
-                <RadioButton Content="Kopioi tiedostoon" />
-                <RadioButton Content="Palauta tiedostosta" />
-            </RadioButtons>
-        </StackPanel>
-
-        <!-- Tiedoston polku -->
-        <StackPanel x:Name="FilePanel" Grid.Row="2" Spacing="8">
-            <TextBlock x:Name="FileLabel" Text="Kohdetiedosto" Style="{StaticResource BodyStrongTextBlockStyle}" />
-            <Grid ColumnSpacing="8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="FilePathBox"
-                         PlaceholderText="Valitse tiedosto..."
-                         IsReadOnly="True" />
-                <Button Grid.Column="1" Content="Selaa..." Click="BrowseButton_Click" />
-            </Grid>
-            <StackPanel x:Name="CompressPanel" Spacing="8">
-                <TextBlock Text="Pakkaus" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                <ComboBox x:Name="CompressionBox" MinWidth="320" SelectedIndex="2">
-                    <ComboBoxItem Content="Ei pakkausta (nopein)" />
-                    <ComboBoxItem Content="Zip (nopea, kohtalainen pakkaus)" />
-                    <ComboBoxItem Content="7-Zip (paras pakkaus, hitaampi)" />
-                </ComboBox>
-            </StackPanel>
-        </StackPanel>
-
         <!-- Profiililista -->
-        <Grid x:Name="ListPanel" Grid.Row="3" RowSpacing="8">
+        <Grid x:Name="ListPanel" Grid.Row="1" RowSpacing="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -149,7 +159,7 @@
         </Grid>
 
         <!-- Toiminnot ja tila -->
-        <Grid Grid.Row="4" ColumnSpacing="16">
+        <Grid Grid.Row="2" ColumnSpacing="16">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
